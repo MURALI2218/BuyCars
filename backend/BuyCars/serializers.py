@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Car_Detail_Model, Car_Buy_Model, Car_Status_Model
+from .models import Car_Detail_Model, Car_Buy_Model, Car_Status_Model, carfueltype_model, cargeartype_model
 
 class UserSerialiers(serializers.ModelSerializer):
     class Meta:
@@ -15,17 +15,30 @@ class UserSerialiers(serializers.ModelSerializer):
         return user
 
 
-class Car_Detailserializers(serializers.ModelSerializer):
+class carfueltypeserializers(serializers.ModelSerializer):
     class Meta:
-        model = Car_Detail_Model
+        model = carfueltype_model
         fields = "__all__"
-        extra_kwargs = {'owner' : {'read_only':True}}
 
+class cargeartypeserializers(serializers.ModelSerializer):
+    class Meta:
+        model = cargeartype_model
+        fields = "__all__"
 
 class Cars_statusserializers(serializers.ModelSerializer):
     class Meta:
         model = Car_Status_Model
         fields = "__all__"
+
+class Car_Detailserializers(serializers.ModelSerializer):
+    owner = UserSerialiers(read_only=True, many=False)
+    fueltype =carfueltypeserializers(read_only=True, many=False)
+    geartype =cargeartypeserializers(read_only=True, many=False)
+    post_status = Cars_statusserializers(read_only=True, many=False)
+    class Meta:
+        model = Car_Detail_Model
+        fields = "__all__"
+        extra_kwargs = {'owner' : {'read_only':True}}
 
 class Car_Buyserializers(serializers.ModelSerializer):
     class Meta:
