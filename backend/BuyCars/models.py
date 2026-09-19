@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 class carfueltype_model(models.Model):
     fueltype = models.CharField(max_length=20, null=False)
-    
+
     def __str__(self):
         return self.fueltype
 
@@ -32,7 +32,7 @@ class Car_Detail_Model(models.Model):
     created_at = models.DateTimeField(auto_now_add=True,null=False )
     carlocation = models.CharField(max_length=50, null=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    post_status = models.ForeignKey(Car_Status_Model, on_delete=models.CASCADE, null=False, default=2)
+    post_status = models.ForeignKey(Car_Status_Model,default=2, on_delete=models.CASCADE)
 
     def __str__(self,):
         return self.model

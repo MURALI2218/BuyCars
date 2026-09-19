@@ -8,8 +8,8 @@ function Owncarslist(){
     const [model, setcarmodel] = useState("")
     const [year, setcarmfyear] = useState("")
     const [price , setcarprice] = useState('')
-    const [fueltype_id , setcarfueltype] = useState('')
-    const [geartype_id, setcargeartype] =useState('')
+    const [fueltypeform , setcarfueltype] = useState('')
+    const [geartypeform, setcargeartype] =useState('')
     const [carloaction, setlocation] =useState('')
 
     const [cardata, setdatas] = useState([])
@@ -18,6 +18,8 @@ function Owncarslist(){
 
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(true)
+
+
     
     //GETTING CARS DATA BROM API
     const owncars = () =>{
@@ -54,18 +56,21 @@ function Owncarslist(){
 
          //Model For ADDING DATA  to BACKEND
            const createcar = (e) =>{
-            const carData = {
+            
+            e.preventDefault();
+
+            const carformdata = {
                             model,
                             colour,
                             year,
                             price,
-                            fueltype: fueltype_id,
-                            geartype: geartype_id,
+                            fueltype_id: fueltypeform,
+                            geartype_id: geartypeform,
                             carlocation: carloaction
                         };
-            e.preventDefault();
+                        console.log(carformdata)
            
-            api.post('/api/carlists/', carData)
+            api.post('/api/carlists/', carformdata)
             .then( (res)=>{
                 if (res.status === 201){
                     alert("Car has been added to sales")
@@ -228,7 +233,7 @@ function Owncarslist(){
                         <select
                         id="fueltype_id"
                         className="form-input"
-                        value={fueltype_id}
+                        value={fueltypeform}
                         onChange={ (e) => setcarfueltype(e.target.value)}
                         >
                             
@@ -246,7 +251,7 @@ function Owncarslist(){
                         <select
                         id="geartype_id"
                         className="form-input"
-                         value={geartype_id}
+                         value={geartypeform}
                         onChange={ (e) => setcargeartype(e.target.value)}
                         >
                             <option value=""> Select Gear Type</option>

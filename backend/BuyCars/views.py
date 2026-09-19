@@ -5,6 +5,8 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import generics,viewsets,views,mixins
 from .models import Car_Detail_Model,Car_Buy_Model,Car_Status_Model, carfueltype_model, cargeartype_model
 
+from django_filters.rest_framework import DjangoFilterBackend
+from .filters import CarFilter
 # Create your views here.
 
 class CreateUserView(generics.CreateAPIView):
@@ -28,14 +30,13 @@ class FuelTypeView(generics.ListAPIView):
 
 class CreateCarforsale(generics.ListCreateAPIView):
     serializer_class = Car_Detailserializers
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        # user = self.request.user
-        return Car_Detail_Model.objects.all()
+    permission_classes = [AllowAny]
+    queryset = Car_Detail_Model.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = CarFilter
         
     def perform_create(self, serializer):
-        
+        print(serializer)
         if serializer.is_valid():
             serializer.save(owner = self.request.user)
 

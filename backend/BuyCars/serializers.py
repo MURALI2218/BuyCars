@@ -31,15 +31,38 @@ class Cars_statusserializers(serializers.ModelSerializer):
         fields = "__all__"
 
 class Car_Detailserializers(serializers.ModelSerializer):
-    owner = UserSerialiers(read_only=True, many=False)
-    fueltype =carfueltypeserializers(read_only=True, many=False)
-    geartype =cargeartypeserializers(read_only=True, many=False)
-    post_status = Cars_statusserializers(read_only=True, many=False)
+
+    owner = UserSerialiers(read_only=True)
+
+    fueltype = carfueltypeserializers(read_only=True)
+    geartype = cargeartypeserializers(read_only=True)
+    post_status = Cars_statusserializers(read_only=True)
+
+    fueltype_id = serializers.PrimaryKeyRelatedField(
+        queryset=carfueltype_model.objects.all(),
+        source='fueltype',
+        write_only=True
+    )
+
+    geartype_id = serializers.PrimaryKeyRelatedField(
+        queryset=cargeartype_model.objects.all(),
+        source='geartype',
+        write_only=True
+    )
+
+    post_status_id = serializers.PrimaryKeyRelatedField(
+        queryset=Car_Status_Model.objects.all(),
+        source='post_status',
+        write_only=True
+    )
+
     class Meta:
         model = Car_Detail_Model
         fields = "__all__"
-        extra_kwargs = {'owner' : {'read_only':True}}
-
+        extra_kwargs = {
+            'owner': {'read_only': True}
+        }
+        
 class Car_Buyserializers(serializers.ModelSerializer):
     class Meta:
         model = Car_Buy_Model
