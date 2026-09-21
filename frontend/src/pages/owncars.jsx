@@ -4,6 +4,7 @@ import '../sytles/carstables.css'
 import Navbar from './Navbar'
 
 function Owncarslist(){
+    const[brand, setcarbrand] = useState("")
     const [colour, setcarcolour] = useState("")
     const [model, setcarmodel] = useState("")
     const [year, setcarmfyear] = useState("")
@@ -60,6 +61,7 @@ function Owncarslist(){
             e.preventDefault();
 
             const carformdata = {
+                            brand,
                             model,
                             colour,
                             year,
@@ -68,7 +70,7 @@ function Owncarslist(){
                             geartype_id: geartypeform,
                             carlocation: carloaction
                         };
-                        console.log(carformdata)
+                       
            
             api.post('/api/carlists/', carformdata)
             .then( (res)=>{
@@ -80,6 +82,10 @@ function Owncarslist(){
                     setcarmfyear("")
                     setcarprice('')
                     setcarmodel('')
+                    setcarfueltype("")
+                    setcargeartype('')
+                    setlocation("")
+                    setcarbrand("")
                    
                 }else (
                     alert("Failed to create car for sale")
@@ -116,6 +122,7 @@ function Owncarslist(){
                     <table className="car-table">
                       <thead>
                             <tr>
+                                <th>Car Brand</th>
                                 <th>Car Model</th>
                                 <th>Colour</th>
                                 <th>Year Model</th>
@@ -131,6 +138,7 @@ function Owncarslist(){
                         <tbody>
                         {cardata.map((car) => (
                             <tr key={car.id}>
+                            <td>{car.brand}</td>
                             <td>{car.model}</td>
                             <td>{car.colour}</td>
                             <td>{car.year}</td>
@@ -152,6 +160,21 @@ function Owncarslist(){
                <div className="form-card">
                     <h2 className="form-title">Create New Car for Sale</h2>
                     <form id="car-sale-form" className="car-form" onSubmit={createcar}>
+                        <div className="form-group">
+                        <label htmlFor="model" className="form-label">
+                            Car Brand
+                        </label>
+                        <input
+                            type="text"
+                            id="brand"
+                            name="brand"
+                            className="form-input"
+                            placeholder="e.g., Honda"
+                            value={brand}
+                            onChange={(e) => setcarbrand(e.target.value)}
+                        />
+                        </div>
+
                         <div className="form-group">
                         <label htmlFor="model" className="form-label">
                             Car Model

@@ -23,6 +23,7 @@ class Car_Status_Model(models.Model):
         return self.post_status
 
 class Car_Detail_Model(models.Model):
+    brand = models.CharField(max_length=50, null=False)
     model = models.CharField(max_length=100, null=False)
     colour = models.CharField(max_length=50, null=False)
     year = models.IntegerField(null=False)

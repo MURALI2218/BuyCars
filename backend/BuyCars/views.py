@@ -28,20 +28,24 @@ class FuelTypeView(generics.ListAPIView):
     def get_queryset(self):
         return carfueltype_model.objects.all()
 
+
 class CreateCarforsale(generics.ListCreateAPIView):
     serializer_class = Car_Detailserializers
-    permission_classes = [AllowAny]
     queryset = Car_Detail_Model.objects.all()
+
     filter_backends = [DjangoFilterBackend]
     filterset_class = CarFilter
-        
-    def perform_create(self, serializer):
-        print(serializer)
-        if serializer.is_valid():
-            serializer.save(owner = self.request.user)
 
-        else:print(serializer.errors)
-    
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return [AllowAny()]
+        return [IsAuthenticated()]
+
+    def perform_create(self, serializer):
+            if serializer.is_valid():
+                serializer.save(owner = self.request.user, post_status_id = 2)
+            
+            else:print(serializer.errors)   
 
 class UpdateCarView(generics.RetrieveUpdateAPIView):
     serializer_class = Car_Detailserializers

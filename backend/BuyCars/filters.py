@@ -6,6 +6,11 @@ from .models import Car_Detail_Model
 
 class CarFilter(django_filters.FilterSet):
 
+    brand = django_filters.CharFilter(
+            field_name='brand',
+            lookup_expr='icontains'
+        )
+
     model = django_filters.CharFilter(
         field_name='model',
         lookup_expr='icontains'
@@ -24,6 +29,7 @@ class CarFilter(django_filters.FilterSet):
     class Meta:
         model = Car_Detail_Model
         fields = [
+            'brand',
             'model',
             'colour',
             'fueltype',
