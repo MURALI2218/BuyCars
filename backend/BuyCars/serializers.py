@@ -61,3 +61,8 @@ class Car_Buyserializers(serializers.ModelSerializer):
         model = Car_Buy_Model
         fields = "__all__"
         extra_kwargs = {'buyer' : {'read_only':True}}
+
+class ChatbotCarserializers(serializers.ModelSerializer):
+    class Meta:
+        model = Car_Detail_Model
+        fields = ['brand', 'model', 'colour', 'year', 'price', 'fueltype', 'geartype', 'carlocation']

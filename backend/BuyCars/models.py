@@ -28,7 +28,7 @@ class Car_Detail_Model(models.Model):
     colour = models.CharField(max_length=50, null=False)
     year = models.IntegerField(null=False)
     price = models.DecimalField(max_digits=10,decimal_places=2,null=False)
-    fueltype = models.ForeignKey(carfueltype_model, on_delete=models.CASCADE, null=False, )
+    fueltype = models.ForeignKey(carfueltype_model, on_delete=models.CASCADE, null=False)
     geartype = models.ForeignKey(cargeartype_model, on_delete=models.CASCADE, null=False)
     created_at = models.DateTimeField(auto_now_add=True,null=False )
     carlocation = models.CharField(max_length=50, null=True)

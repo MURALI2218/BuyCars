@@ -60,17 +60,18 @@ function Owncarslist(){
             
             e.preventDefault();
 
-            const carformdata = {
-                            brand,
-                            model,
-                            colour,
-                            year,
-                            price,
-                            fueltype_id: fueltypeform,
-                            geartype_id: geartypeform,
-                            carlocation: carloaction
-                        };
-                       
+            const carformdata =new FormData();
+                            
+                formData.append("brand", brand);
+                formData.append("model", model);
+                formData.append("colour", colour);
+                formData.append("year", year);
+                formData.append("price", price);
+                // formData.append("image", image); 
+                formData.append("fueltype_id", fueltypeform)  
+                formData.append("geartype_id", geartypeform)   
+                 formData.append("carlocation", carloaction)       
+                        
            
             api.post('/api/carlists/', carformdata)
             .then( (res)=>{
@@ -160,6 +161,11 @@ function Owncarslist(){
                <div className="form-card">
                     <h2 className="form-title">Create New Car for Sale</h2>
                     <form id="car-sale-form" className="car-form" onSubmit={createcar}>
+                        <input
+                        type="file"
+                        accept="image/*"
+                        
+                        />
                         <div className="form-group">
                         <label htmlFor="model" className="form-label">
                             Car Brand
